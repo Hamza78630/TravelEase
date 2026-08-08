@@ -10,17 +10,47 @@ const ContactForm = () => {
     message: ''
   });
 
-  const [submittedData, setSubmittedData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmittedData(formData);
-    setFormData({ name: '', email: '', phone: '', subject: '', enquiry: '', message: '' });
+    setError(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch('http://localhost:3001/contacts/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          enquiryType: formData.enquiry,
+          subject: formData.subject,
+          message: formData.message
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.status === "ERROR") {
+        throw new Error(data.message);
+      }
+
+      setSuccess(true);
+      setFormData({ name: '', email: '', phone: '', subject: '', enquiry: '', message: '' });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,6 +59,14 @@ const ContactForm = () => {
         <form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Contact Us</legend>
+
+            {error && (
+              <p style={{ color: 'red' }}>⚠️ {error}</p>
+            )}
+            {success && (
+              <p style={{ color: 'green' }}>✅ Message sent! We'll get back to you soon.</p>
+            )}
+
             <table>
               <tbody>
 
@@ -63,7 +101,7 @@ const ContactForm = () => {
                       <option value="">Select a topic</option>
                       <option value="Booking Help">Booking Help</option>
                       <option value="Package Info">Package Info</option>
-                      <option value="Cancellation">Cancellation / Refund</option>
+                      <option value="Cancellation/Refund">Cancellation / Refund</option>
                       <option value="Feedback">Feedback</option>
                       <option value="Other">Other</option>
                     </select>
@@ -94,7 +132,7 @@ const ContactForm = () => {
 
                 <tr>
                   <td colSpan="2" align="center">
-                    <input type="submit" value="Send Message" />
+                    <input type="submit" value={loading ? "Sending..." : "Send Message"} disabled={loading} />
                   </td>
                 </tr>
 
@@ -103,31 +141,6 @@ const ContactForm = () => {
           </fieldset>
         </form>
       </div>
-
-      {submittedData && (
-        <div className="form-container" style={{ marginTop: '24px' }}>
-          <fieldset>
-            <legend>Message Received ✓</legend>
-            <table>
-              <tbody>
-                {[
-                  { label: "Name", value: submittedData.name },
-                  { label: "Email", value: submittedData.email },
-                  { label: "Phone", value: submittedData.phone || '—' },
-                  { label: "Enquiry Type", value: submittedData.enquiry },
-                  { label: "Subject", value: submittedData.subject },
-                  { label: "Message", value: submittedData.message },
-                ].map((row, i) => (
-                  <tr key={i}>
-                    <td>{row.label}:</td>
-                    <td>{row.value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </fieldset>
-        </div>
-      )}
     </>
   );
 };

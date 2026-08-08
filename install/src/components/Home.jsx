@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Registration from './Registration'
+import Destinations from "./Destinations";
 import TravelPackages from "./TravelPackages";
 
 const Home = () => {
@@ -13,12 +13,12 @@ const Home = () => {
             <h1>Travel Smarter.<br />Travel Easier.</h1>
             <p>Book flights, buses, trains, and car rentals — all in one seamless platform.</p>
             <div className="hero-buttons">
-            <Link to="/registration" className="primary-btn">
-  Start Booking
-</Link>
-<Link to="/travelpackages" className="secondary-btn">
-  Explore Packages
-</Link>
+              <Link to="/destinations" className="primary-btn">
+                Start Booking
+              </Link>
+              <Link to="/travelpackages" className="secondary-btn">
+                Explore Packages
+              </Link>
             </div>
             <div className="hero-stats">
               <div className="hero-stat"><strong>50K+</strong><span>Happy Travelers</span></div>
@@ -36,22 +36,22 @@ const Home = () => {
         <div className="trust-band-track">
           {["Emirates", "Qatar Airways", "Turkish Airlines", "Lufthansa", "Singapore Airlines",
             "Emirates", "Qatar Airways", "Turkish Airlines", "Lufthansa", "Singapore Airlines"].map((name, i) => (
-            <span key={i} className="trust-band-item">✦ {name}</span>
-          ))}
+              <span key={i} className="trust-band-item">✦ {name}</span>
+            ))}
         </div>
       </div>
 
       {/* ── INTRO ── */}
-<section className="intro-section">
-  <div className="intro-inner">
-    <div className="intro-badge">OUR MISSION</div>
-    <h2>One Platform. Every Journey.</h2>
-    <p>TravelEase brings together the world's best transport providers into one powerful booking platform — so planning your journey is as exciting as the trip itself.</p>
-    <Link to="/destinations" className="destinations-btn">
-      Explore Destinations
-    </Link>
-  </div>
-</section>
+      <section className="intro-section">
+        <div className="intro-inner">
+          <div className="intro-badge">OUR MISSION</div>
+          <h2>One Platform. Every Journey.</h2>
+          <p>TravelEase brings together the world's best transport providers into one powerful booking platform — so planning your journey is as exciting as the trip itself.</p>
+          <Link to="/destinations" className="destinations-btn">
+            Explore Destinations
+          </Link>
+        </div>
+      </section>
 
       {/* ── WHY CHOOSE US ── */}
       <div className="why-section">
@@ -116,9 +116,9 @@ const Home = () => {
         <div className="ceo-audio-inner">
           <div className="ceo-audio-icon">
             <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
-              <path d="M10 8.5C10 7.67 10.67 7 11.5 7h1C13.33 7 14 7.67 14 8.5v7c0 .83-.67 1.5-1.5 1.5h-1C10.67 17 10 16.33 10 15.5v-7z" fill="currentColor"/>
-              <path d="M8 10v4M16 10v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M10 8.5C10 7.67 10.67 7 11.5 7h1C13.33 7 14 7.67 14 8.5v7c0 .83-.67 1.5-1.5 1.5h-1C10.67 17 10 16.33 10 15.5v-7z" fill="currentColor" />
+              <path d="M8 10v4M16 10v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </div>
           <div className="ceo-audio-text">
@@ -171,12 +171,12 @@ const Home = () => {
             <p>Join thousands of happy travelers. Book your next adventure today.</p>
           </div>
           <div className="cta-band-actions">
-          <Link to="/registration" className="primary-btn">
-  Start Booking
-</Link>
-<Link to="/travelpackages" className="secondary-btn">
-  View Packages
-</Link>
+            <Link to="/destinations" className="primary-btn">
+              Start Booking
+            </Link>
+            <Link to="/travelpackages" className="secondary-btn">
+              View Packages
+            </Link>
           </div>
         </div>
       </section>

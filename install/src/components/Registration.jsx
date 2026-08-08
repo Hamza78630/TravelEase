@@ -104,7 +104,7 @@ function Registration() {
             <p>Log in and pick up right where you left off.</p>
           </div>
           <div className="cta-band-actions">
-          <Link to="/registration" className="primary-btn">
+          <Link to="/login" className="primary-btn">
                  Log In
           </Link>
           <Link to="/travelpackages" className="secondary-btn">

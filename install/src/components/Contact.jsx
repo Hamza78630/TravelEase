@@ -1,6 +1,6 @@
 import ContactForm from './ContactForm';
 import { Link } from "react-router-dom";
-import Registration from './Registration'
+import Destinations from './Destinations';
 import TravelPackages from "./TravelPackages";
 
 const Contact = () => {
@@ -105,7 +105,7 @@ const Contact = () => {
             <p>Book your next adventure with TravelEase today.</p>
           </div>
           <div className="cta-band-actions">
-          <Link to="/registration" className="primary-btn">
+          <Link to="/destinations" className="primary-btn">
                  Start Booking
           </Link>
           <Link to="/travelpackages" className="secondary-btn">

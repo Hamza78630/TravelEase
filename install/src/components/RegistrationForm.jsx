@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fname: '',
@@ -14,31 +17,69 @@ const RegistrationForm = () => {
     terms: false
   });
 
-  const [submittedData, setSubmittedData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value} = e.target;
+    const { name, value, type, checked } = e.target;
 
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmittedData(formData);
-    setFormData({ 
-      fname: '',
-      lname: '',
-      age: '',
-      gender: '',
-      email: '',
-      pass: '',
-      phone: '',
-      date: '',
-      terms: false
-    });
+    setError(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch('http://localhost:3001/users/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: formData.fname,
+          lastName: formData.lname,
+          age: Number(formData.age),
+          gender: formData.gender,
+          email: formData.email,
+          password: formData.pass,
+          contactNo: formData.phone,
+          travelDate: formData.date,
+          termsAccepted: formData.terms
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.status === "ERROR") {
+        throw new Error(data.message);
+      }
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.user.userId);
+
+      navigate('/profile');
+
+      setSuccess(true);
+      setFormData({
+        fname: '',
+        lname: '',
+        age: '',
+        gender: '',
+        email: '',
+        pass: '',
+        phone: '',
+        date: '',
+        terms: false
+      });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,6 +88,13 @@ const RegistrationForm = () => {
         <form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Registration Form</legend>
+
+            {error && (
+              <p style={{ color: 'red' }}>⚠️ {error}</p>
+            )}
+            {success && (
+              <p style={{ color: 'green' }}>✅ Registered successfully!</p>
+            )}
 
             <table>
               <tbody>
@@ -75,20 +123,26 @@ const RegistrationForm = () => {
                 <tr>
                   <td>Gender:</td>
                   <td>
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Female"
-                      checked={formData.gender === 'Female'}
-                      onChange={handleChange}
-                    /> Female
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Male"
-                      checked={formData.gender === 'Male'}
-                      onChange={handleChange}
-                    /> Male
+                    <label className="radio-option">
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="Female"
+                        checked={formData.gender === 'Female'}
+                        onChange={handleChange}
+                      />
+                      Female
+                    </label>
+                    <label className="radio-option">
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="Male"
+                        checked={formData.gender === 'Male'}
+                        onChange={handleChange}
+                      />
+                      Male
+                    </label>
                   </td>
                 </tr>
 
@@ -123,13 +177,22 @@ const RegistrationForm = () => {
                 <tr>
                   <td>Terms & Conditions:</td>
                   <td>
-                    <input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} required />
+                    <label className="checkbox-option">
+                      <input
+                        type="checkbox"
+                        name="terms"
+                        checked={formData.terms}
+                        onChange={handleChange}
+                        required
+                      />
+                      I agree to Terms & Conditions
+                    </label>
                   </td>
                 </tr>
 
                 <tr>
                   <td colSpan="2" align="center">
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value={loading ? "Submitting..." : "Submit"} disabled={loading} />
                   </td>
                 </tr>
 
@@ -137,58 +200,7 @@ const RegistrationForm = () => {
             </table>
           </fieldset>
         </form>
-        </div>
-
-      {submittedData && (
-  <div className="form-container">
-    <fieldset>
-      <legend>Submitted Details</legend>
-
-      <table>
-        <tbody>
-          <tr>
-            <td>Full Name:</td>
-            <td>{submittedData.fname} {submittedData.lname}</td>
-          </tr>
-
-          <tr>
-            <td>Age:</td>
-            <td>{submittedData.age}</td>
-          </tr>
-
-          <tr>
-            <td>Gender:</td>
-            <td>{submittedData.gender}</td>
-          </tr>
-
-          <tr>
-            <td>Password:</td>
-            <td>{submittedData.pass}</td>
-          </tr>
-
-          <tr>
-            <td>Email:</td>
-            <td>{submittedData.email}</td>
-          </tr>
-
-          <tr>
-            <td>Contact:</td>
-            <td>{submittedData.phone}</td>
-          </tr>
-
-          <tr>
-            <td>Travel Date:</td>
-            <td>{submittedData.date}</td>
-          </tr>
-          <tr>
-            <td>Accepted Terms:</td>
-            <td>{submittedData.terms ? 'Yes' : 'No'}</td>
-          </tr>
-        </tbody>
-      </table>
-    </fieldset>
-    </div>
-  )}
+      </div>
     </>
   );
 };

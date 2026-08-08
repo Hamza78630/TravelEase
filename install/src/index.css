@@ -260,6 +260,7 @@
    #header nav {
      display: flex;
      gap: 45px;
+     align-items:center;
    }
    
    #header nav a {
@@ -2336,7 +2337,7 @@
    
    /* ============================================================
       22. SHARED FORMS  (form-container, fieldset, inputs)
-          Used by RegistrationForm & ContactForm
+          Used by RegistrationForm & ContactForm & LogIn
       ============================================================ */
    
    .form-container {
@@ -2421,6 +2422,40 @@
      border-radius: 6px;
      padding: 10px 12px;
    }
+
+   /* ============================================================
+   Fix: radio/checkbox inputs were inheriting the shared
+   ".form-container input { width: 100% }" rule from section 22,
+   which browsers don't handle well for radios/checkboxes —
+   causing the dot and its label to misalign (Gender row, and
+   the Terms checkbox on Registration).
+   Add this AFTER section 22 in index.css. Only re-declares
+   width for these two input types — text/email/password/etc.
+   keep their existing 100% width untouched.
+   ============================================================ */
+
+.form-container input[type="radio"],
+.form-container input[type="checkbox"] {
+  width: auto;
+  flex-shrink: 0;
+}
+
+.form-container .radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.form-container .radio-option:last-child {
+  margin-bottom: 0;
+}
+
+.form-container .checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
    
    
    /* ============================================================
@@ -2549,3 +2584,535 @@
        gap: 6px;
      }
    }
+
+   /* ============================================================
+      24. PROFILE
+      ============================================================ */
+
+
+      .profile-section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 70px 20px 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 46px;
+      }
+       
+      /* ── Boarding-pass card ── */
+      .boarding-pass {
+        display: flex;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(10, 31, 68, 0.22);
+        min-height: 260px;
+      }
+       
+      .boarding-pass-main {
+        flex: 1;
+        background: linear-gradient(135deg, #0a1f44 0%, #123a73 45%, #205ca0 100%);
+        color: #fff;
+        padding: 32px 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+       
+      .boarding-pass-topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+       
+      .boarding-pass-brand {
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: 0.02em;
+      }
+       
+      .boarding-pass-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #56d8e4;
+        border: 1px solid rgba(86, 216, 228, 0.4);
+        padding: 5px 12px;
+        border-radius: 50px;
+      }
+       
+      .boarding-pass-body {
+        display: flex;
+        gap: 26px;
+        align-items: flex-start;
+      }
+       
+      .boarding-pass-avatar {
+        flex-shrink: 0;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+      }
+       
+      .boarding-pass-info {
+        flex: 1;
+      }
+       
+      .boarding-pass-field-label {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+        margin-bottom: 4px;
+      }
+       
+      .boarding-pass-info h2 {
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 0 18px;
+        text-align: left;
+      }
+       
+      .boarding-pass-detail-row {
+        display: flex;
+        gap: 40px;
+        margin-top: 14px;
+      }
+       
+      .boarding-pass-detail-row p {
+        font-size: 15px;
+        color: #fff;
+        margin: 0;
+        text-align: left;
+      }
+       
+      /* Perforated edge divider between main card and stub */
+      .boarding-pass-perforation {
+        width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 14px 0;
+        background: #f7f9fc;
+      }
+       
+      .boarding-pass-perforation span {
+        width: 14px;
+        height: 8px;
+        background: #f0f4fa;
+        border-radius: 50%;
+        margin-left: -7px;
+      }
+       
+      /* Right-hand stub */
+      .boarding-pass-stub {
+        width: 220px;
+        flex-shrink: 0;
+        background: #f7f9fc;
+        padding: 32px 26px;
+        display: flex;
+        flex-direction: column;
+        border-left: 2px dashed rgba(10, 31, 68, 0.15);
+      }
+       
+      .boarding-pass-stub strong {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0a1f44;
+        margin-bottom: 4px;
+      }
+       
+      .boarding-pass-barcode {
+        display: flex;
+        align-items: flex-end;
+        gap: 3px;
+        margin-top: auto;
+        padding-top: 24px;
+      }
+       
+      .boarding-pass-barcode span {
+        width: 3px;
+        background: #0a1f44;
+        opacity: 0.75;
+      }
+       
+      /* ── Bookings preview / empty state ── */
+      .profile-bookings-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 40px 40px;
+        box-shadow: 0 10px 35px rgba(10, 31, 68, 0.08);
+        border: 1px solid rgba(10, 31, 68, 0.06);
+      }
+       
+      /* ── Logout ── */
+      .profile-logout-row {
+        display: flex;
+        justify-content: center;
+      }
+       
+      .profile-logout-btn {
+        background: transparent;
+        border: 2px solid #dc2626;
+        color: #dc2626;
+        padding: 12px 34px;
+        border-radius: 40px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.25s ease;
+        font-family: 'Poppins', Arial, sans-serif;
+      }
+       
+      .profile-logout-btn:hover {
+        background: #dc2626;
+        color: #fff;
+      }
+       
+      /* ── Responsive ── */
+      @media (max-width: 700px) {
+        .boarding-pass {
+          flex-direction: column;
+        }
+        .boarding-pass-perforation {
+          display: none;
+        }
+        .boarding-pass-stub {
+          width: 100%;
+          border-left: none;
+          border-top: 2px dashed rgba(10, 31, 68, 0.15);
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 20px;
+          align-items: center;
+        }
+        .boarding-pass-barcode {
+          display: none;
+        }
+        .boarding-pass-detail-row {
+          flex-direction: column;
+          gap: 14px;
+        }
+      }
+
+   /* ============================================================
+   25. NAV AVATAR ICON
+   ============================================================ */
+
+#header nav a.nav-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  padding: 0;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+#header nav a.nav-avatar:hover {
+  background: rgba(86, 216, 228, 0.2);
+  border-color: #56d8e4;
+  transform: translateY(-2px);
+  text-decoration: none; 
+}
+
+#header nav a.nav-avatar svg {
+  width: 20px;
+  height: 20px;
+  color: #fff;
+}
+
+/* ============================================================
+   26. BOOKING PAGE
+   ============================================================ */
+
+   .booking-section {
+    padding: 70px 20px 100px;
+    background: #f7f9fc;
+  }
+  
+  .booking-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 36px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  
+  .booking-summary-card {
+    flex: 1;
+    min-width: 320px;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(10, 31, 68, 0.1);
+    border: 1px solid rgba(10, 31, 68, 0.06);
+  }
+  
+  .booking-summary-image {
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .booking-summary-body {
+    padding: 28px 30px;
+  }
+  
+  .booking-type-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #205ca0;
+    background: rgba(32, 92, 160, 0.08);
+    border: 1px solid rgba(32, 92, 160, 0.14);
+    padding: 5px 12px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+  }
+  
+  .booking-summary-body h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0a1f44;
+    margin: 0 0 8px;
+    text-align: left;
+  }
+  
+  .booking-summary-location {
+    font-size: 15px;
+    color: #6b80a0;
+    margin: 0 0 16px;
+    text-align: left;
+  }
+  
+  .booking-summary-line {
+    font-size: 14px;
+    color: #444;
+    margin: 6px 0;
+    text-align: left;
+  }
+  
+  .booking-summary-inclusions {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+  
+  .booking-summary-inclusions li {
+    font-size: 14px;
+    color: #444;
+    margin: 6px 0;
+    text-align: left;
+  }
+  
+  .booking-summary-price {
+    font-size: 30px;
+    font-weight: 700;
+    color: #0a1f44;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(10, 31, 68, 0.08);
+  }
+  
+  .booking-summary-price span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b80a0;
+    margin-left: 4px;
+  }
+  
+  .booking-form-container {
+    flex: 1;
+    min-width: 320px;
+    margin: 0 !important;
+  }
+  
+  .booking-confirmed-wrap {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  .booking-confirmed-check {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0a1f44, #205ca0);
+    color: #fff;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    animation: popIn 0.4s ease;
+  }
+  
+  @keyframes popIn {
+    from { transform: scale(0.6); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  
+  .booking-confirmed-wrap h2 {
+    font-size: 26px;
+    color: #0a1f44;
+    margin: 0 0 8px;
+  }
+  
+  .booking-confirmed-wrap p {
+    color: #6b80a0;
+    font-size: 15px;
+  }
+  
+  @media (max-width: 800px) {
+    .booking-layout {
+      flex-direction: column;
+    }
+  }
+
+  /* ============================================================
+   27. PROFILE — TRIPS LIST
+   ============================================================ */
+
+.profile-trips-wrap {
+  background: transparent;
+}
+
+.profile-trips-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.profile-trip-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(10, 31, 68, 0.08);
+  border: 1px solid rgba(10, 31, 68, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.profile-trip-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(10, 31, 68, 0.14);
+}
+
+.profile-trip-image {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-trip-body {
+  padding: 20px 22px;
+}
+
+.profile-trip-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.profile-trip-status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 50px;
+}
+
+.profile-trip-status--confirmed {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.profile-trip-status--pending {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}
+
+.profile-trip-status--cancelled {
+  background: rgba(220, 38, 38, 0.1);
+  color: #b91c1c;
+}
+
+.profile-trip-body h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0a1f44;
+  margin: 0 0 6px;
+  text-align: left;
+}
+
+.profile-trip-location,
+.profile-trip-date {
+  font-size: 13.5px;
+  color: #6b80a0;
+  margin: 4px 0;
+  text-align: left;
+}
+
+.profile-trip-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(10, 31, 68, 0.06);
+}
+
+.profile-trip-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a1f44;
+}
+
+.profile-trip-cancel {
+  background: transparent;
+  border: 1.5px solid #dc2626;
+  color: #dc2626;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+.profile-trip-cancel:hover {
+  background: #dc2626;
+  color: #fff;
+} 
+
+.profile-trips-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}

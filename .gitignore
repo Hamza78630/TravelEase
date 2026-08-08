@@ -1,0 +1,4 @@
+﻿install/node_modules/
+install/.env
+install/server/node_modules/
+install/server/.env
