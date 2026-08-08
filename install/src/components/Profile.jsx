@@ -18,10 +18,10 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const [profileRes, bookingsRes] = await Promise.all([
-          fetch('http://localhost:3001/users/profile', {
+          fetch('https://traveleasebackend-dn0ivp9p.b4a.run/users/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
           }),
-          fetch('http://localhost:3001/bookings/mine', {
+          fetch('https://traveleasebackend-dn0ivp9p.b4a.run/bookings/mine', {
             headers: { 'Authorization': `Bearer ${token}` }
           })
         ]);
@@ -48,7 +48,7 @@ const Profile = () => {
   const handleLogout = async () => {
     const token = localStorage.getItem('token');
     try {
-      await fetch('http://localhost:3001/users/logout', {
+      await fetch('https://traveleasebackend-dn0ivp9p.b4a.run/users/logout', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -63,7 +63,7 @@ const Profile = () => {
   const handleCancel = async (bookingId) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:3001/bookings/cancel/${bookingId}`, {
+      const res = await fetch(`https://traveleasebackend-dn0ivp9p.b4a.run/bookings/cancel/${bookingId}`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` }
       });

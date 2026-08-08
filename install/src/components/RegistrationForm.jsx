@@ -36,7 +36,7 @@ const RegistrationForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:3001/users/add', {
+      const res = await fetch('https://traveleasebackend-dn0ivp9p.b4a.run/users/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

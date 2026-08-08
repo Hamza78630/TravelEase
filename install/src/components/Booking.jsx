@@ -39,7 +39,7 @@ const Booking = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:3001/bookings/add', {
+      const res = await fetch('https://traveleasebackend-dn0ivp9p.b4a.run/bookings/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

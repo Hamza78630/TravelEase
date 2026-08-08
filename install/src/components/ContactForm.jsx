@@ -25,7 +25,7 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:3001/contacts/add', {
+      const res = await fetch('https://traveleasebackend-dn0ivp9p.b4a.run/contacts/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
