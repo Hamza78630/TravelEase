@@ -1,4 +1,4 @@
-﻿[build]
+[build]
   base = "install"
   command = "npm run build"
   publish = "install/dist"
