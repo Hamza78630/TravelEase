@@ -39,7 +39,7 @@ const Booking = () => {
     }
 
     try {
-      const res = await fetch('travelease-production-eec5.up.railway.app/bookings/add', {
+      const res = await fetch('https://travelease-production-eec5.up.railway.app/bookings/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

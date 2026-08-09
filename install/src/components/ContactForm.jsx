@@ -25,7 +25,7 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('travelease-production-eec5.up.railway.app/contacts/add', {
+      const res = await fetch('https://travelease-production-eec5.up.railway.app/contacts/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
