@@ -61,6 +61,7 @@
      margin: 10px;
      border-radius: 5px;
      width: 350px;
+     max-width: 100%;
      height: 230px;
      object-fit: cover;
    }
@@ -69,10 +70,12 @@
      display: block;
      margin-left: 0 !important;
      margin-right: auto !important;
+     max-width: 100%;
    }
    
    iframe {
      width: 560px;
+     max-width: 100%;
      height: 315px;
      display: block;
      margin-left: 0 !important;
@@ -272,6 +275,85 @@
    
    #header nav a:hover {
      text-decoration: underline;
+   }
+
+   /* Hamburger toggle button — hidden on desktop */
+   .nav-toggle {
+     display: none;
+     flex-direction: column;
+     justify-content: center;
+     gap: 5px;
+     width: 34px;
+     height: 34px;
+     background: transparent;
+     border: none;
+     cursor: pointer;
+     padding: 0;
+     z-index: 1100;
+   }
+
+   .nav-toggle span {
+     display: block;
+     width: 26px;
+     height: 2.5px;
+     background: #fff;
+     border-radius: 2px;
+     transition: transform 0.25s ease, opacity 0.25s ease;
+   }
+
+   .nav-toggle.is-active span:nth-child(1) {
+     transform: translateY(7.5px) rotate(45deg);
+   }
+   .nav-toggle.is-active span:nth-child(2) {
+     opacity: 0;
+   }
+   .nav-toggle.is-active span:nth-child(3) {
+     transform: translateY(-7.5px) rotate(-45deg);
+   }
+
+   .nav-backdrop {
+     display: none;
+   }
+
+   @media (max-width: 850px) {
+     .nav-toggle {
+       display: flex;
+     }
+
+     #header nav {
+       position: fixed;
+       top: 0;
+       right: 0;
+       height: 100vh;
+       width: min(280px, 75vw);
+       background: #0a1f44;
+       flex-direction: column;
+       align-items: flex-start;
+       justify-content: flex-start;
+       gap: 28px;
+       padding: 90px 30px 30px;
+       box-sizing: border-box;
+       transform: translateX(100%);
+       transition: transform 0.3s ease;
+       z-index: 1050;
+     }
+
+     #header nav.nav-open {
+       transform: translateX(0);
+     }
+
+     #header nav a {
+       font-size: 17px;
+       width: 100%;
+     }
+
+     .nav-backdrop {
+       display: block;
+       position: fixed;
+       inset: 0;
+       background: rgba(0, 0, 0, 0.45);
+       z-index: 1040;
+     }
    }
    
    
@@ -3115,4 +3197,44 @@
   gap: 20px;
   flex-wrap: wrap;
   margin-bottom: 24px;
+}
+
+  /* ============================================================
+   28. RESPONSIVE FOR MOBILE.
+   ============================================================ */
+
+@media (max-width: 700px) {
+  #footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
+    padding: 28px 20px;
+  }
+  #footer .footer-center {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .form-container table,
+  .form-container tbody,
+  .form-container tr,
+  .form-container td {
+    display: block;
+    width: 100%;
+  }
+  .form-container table {
+    border-spacing: 0;
+  }
+  .form-container tr {
+    margin-bottom: 14px;
+  }
+  .form-container td:first-child {
+    width: 100%;
+    padding: 0 0 6px 0;
+    font-weight: 600;
+  }
+  .form-container td:last-child {
+    padding: 0;
+  }
 }
