@@ -18,10 +18,10 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const [profileRes, bookingsRes] = await Promise.all([
-          fetch('https://traveleasebackend-dn0ivp9p.b4a.run/users/profile', {
+          fetch('travelease-production-eec5.up.railway.app/users/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
           }),
-          fetch('https://traveleasebackend-dn0ivp9p.b4a.run/bookings/mine', {
+          fetch('travelease-production-eec5.up.railway.app/bookings/mine', {
             headers: { 'Authorization': `Bearer ${token}` }
           })
         ]);
@@ -48,7 +48,7 @@ const Profile = () => {
   const handleLogout = async () => {
     const token = localStorage.getItem('token');
     try {
-      await fetch('https://traveleasebackend-dn0ivp9p.b4a.run/users/logout', {
+      await fetch('travelease-production-eec5.up.railway.app/users/logout', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -63,7 +63,7 @@ const Profile = () => {
   const handleCancel = async (bookingId) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`https://traveleasebackend-dn0ivp9p.b4a.run/bookings/cancel/${bookingId}`, {
+      const res = await fetch(`travelease-production-eec5.up.railway.app/bookings/cancel/${bookingId}`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` }
       });

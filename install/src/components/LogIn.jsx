@@ -24,7 +24,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('https://traveleasebackend-dn0ivp9p.b4a.run/users/login', {
+      const res = await fetch('travelease-production-eec5.up.railway.app/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
