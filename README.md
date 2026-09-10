@@ -23,9 +23,14 @@ A full-stack travel booking platform built with the MERN stack — browse destin
 - **Auth:** JSON Web Tokens (JWT) + bcrypt
 
 ## Project Structure
+
+```
 install/
 ├── src/ # React frontend
 └── server/ # Express backend (separate package.json)
+```
+
+---
 
 ## Running Locally
 
