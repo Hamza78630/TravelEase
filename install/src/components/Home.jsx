@@ -101,13 +101,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ── FOUNDER VIDEO ── */}
+      {/* ── TEMPLATE VIDEO ── */}
       <div className="founder-section">
         <div className="founder-label">FROM THE FOUNDER</div>
         <h2 className="founder-heading">The Story Behind TravelEase</h2>
         <p className="founder-sub">Watch how it all began and what drives our passion for travel.</p>
         <div className="founder-video-wrapper">
-          <iframe src="https://youtu.be/Xj4E0Zry6K4?si=JZI5L_4MNNS4IKAH" allowFullScreen title="Founder Message" />
+          <iframe src="https://www.youtube.com/embed/Xj4E0Zry6K4" allowFullScreen title="Founder Message" />
         </div>
       </div>
 
